@@ -87,7 +87,12 @@ public class ImeiPlugin extends CordovaPlugin {
     }
 
     private void getDeviceIdWithPermission(CallbackContext callbackContext) throws JSONException {
-        String id = telephonyManager.getDeviceId();
+        String id = "";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            id = telephonyManager.getImei();
+        } else {
+            id = telephonyManager.getDeviceId();
+        }
         callbackContext.sendPluginResult(OK(id));
     }
 
