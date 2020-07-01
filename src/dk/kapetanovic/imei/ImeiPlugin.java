@@ -1,6 +1,5 @@
 package dk.kapetanovic.imei;
 
-import android.os.Build;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -35,7 +34,7 @@ public class ImeiPlugin extends CordovaPlugin {
                 .getApplicationContext()
                 .getSystemService(Context.TELEPHONY_SERVICE);
 
-        this.biggerThanN  = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+        this.biggerThanN  = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O;
     }
 
     @Override
