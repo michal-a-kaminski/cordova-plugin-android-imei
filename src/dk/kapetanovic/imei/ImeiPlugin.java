@@ -1,11 +1,11 @@
 package dk.kapetanovic.imei;
 
+import android.os.Build;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.os.Build;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -23,7 +23,7 @@ public class ImeiPlugin extends CordovaPlugin {
     private static final int REQUEST_CODE_DEVICE_ID = 0;
 
     private TelephonyManager telephonyManager;
-    private Build build;
+    private biggerThanN = false;
     private final List<CallbackContext> deviceIdCallbacks = new ArrayList<CallbackContext>();
 
     @Override
@@ -34,6 +34,8 @@ public class ImeiPlugin extends CordovaPlugin {
                 .getApplication()
                 .getApplicationContext()
                 .getSystemService(Context.TELEPHONY_SERVICE);
+
+        this.biggerThanN  = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
     }
 
     @Override
@@ -89,7 +91,7 @@ public class ImeiPlugin extends CordovaPlugin {
 
     private void getDeviceIdWithPermission(CallbackContext callbackContext) throws JSONException {
         String id = "";
-        if (build.VERSION.SDK_INT >= build.VERSION_CODES.O) {
+        if (this.biggerThanN) {
             id = telephonyManager.getImei();
         } else {
             id = telephonyManager.getDeviceId();
